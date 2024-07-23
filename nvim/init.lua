@@ -9,6 +9,8 @@ require "user.conform"
 require "user.impatient"
 require "user.telescope"
 require "user.options"
+require "user.cmp"
+require "user.lsp"
 
 vim.cmd("colorscheme monokai")
 vim.cmd("let g:python_recommended_style = 0")

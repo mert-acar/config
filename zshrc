@@ -103,13 +103,32 @@ fi
 alias "vi"="nvim"
 alias "a"="source venv/bin/activate"
 alias "d"="deactivate"
+alias "ac"="conda activate"
+alias "dc"="conda deactivate"
 alias "ll"="ls -la"
 alias "rr"="rm -rf __pycache__"
 alias "tmux"='tmux -2'
 alias "lab"='jupyter lab'
 alias "b"="black --line-length=100 *.py"
+alias "t"="tmux"
 # alias "autopep8"="autopep8 --indent-size=2"
 
 export PATH=/usr/bin:/usr/local/bin:/opt/homebrew/bin:/bin:/usr/sbin:/sbin
 export PATH="$PATH:/Users/smol/Library/Python/3.9/bin"
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/smol/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/smol/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/smol/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/smol/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 

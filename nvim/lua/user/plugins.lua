@@ -50,6 +50,19 @@ return packer.startup(
     use { "akinsho/bufferline.nvim"}
     use { "moll/vim-bbye" }
 
+    -- CMP Plugins (completion)
+    use { "hrsh7th/nvim-cmp"}
+    use { "hrsh7th/cmp-buffer"}
+    use { "hrsh7th/cmp-path"}
+    use { "hrsh7th/cmp-cmdline"}
+    use { "hrsh7th/cmp-nvim-lsp"}
+
+    -- LSP
+    use { "neovim/nvim-lspconfig"}
+    use { "williamboman/mason.nvim"}
+    use { "williamboman/mason-lspconfig.nvim"}
+    use { "jose-elias-alvarez/null-ls.nvim"}
+
     use { "nvim-treesitter/nvim-treesitter"}
     use { "JoosepAlviste/nvim-ts-context-commentstring"}
     use { "numToStr/Comment.nvim"}
@@ -64,6 +77,7 @@ return packer.startup(
     use { "crusoexia/vim-monokai"}
 
     use { "nvim-telescope/telescope.nvim"}
+    use { "iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end,}
 
     -- Automatically set up configuration after cloning packer.nvim
     -- Put this at the end after all plugins
