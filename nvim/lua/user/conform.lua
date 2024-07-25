@@ -11,7 +11,7 @@ conform.setup {
   formatters = {
     yapf = {
       command = 'yapf',
-      args = {"--style=~/.config/yapf/setup.cfg"},
+      args = {"--style=/Users/smol/.config/yapf/setup.cfg"},
     }
   }
 }

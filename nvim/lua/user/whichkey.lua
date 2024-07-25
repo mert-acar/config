@@ -3,104 +3,87 @@ if not status_ok then
   return
 end
 
-local setup = {
+which_key.setup({
+  delay = function(ctx) return ctx.plugin and 0 or 200 end,
+  -- filter = function(mapping) return true end,
+  notify = false,
   plugins = {
-    marks = true, -- shows a list of your marks on ' and `
-    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+    marks = true,       -- shows a list of your marks on ' and `
+    registers = true,   -- shows your registers on " in NORMAL or <C-r> in INSERT mode
     spelling = {
-      enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      enabled = true,   -- enabling this will show WhichKey when pressing z= to select spelling suggestions
       suggestions = 20, -- how many suggestions should be shown in the list?
     },
-    -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-    -- No actual key bindings are created
     presets = {
-      operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-      motions = true, -- adds help for motions
+      operators = false,   -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      motions = true,      -- adds help for motions
       text_objects = true, -- help for text objects triggered after entering an operator
-      windows = true, -- default bindings on <c-w>
-      nav = true, -- misc bindings to work with windows
-      z = true, -- bindings for folds, spelling and others prefixed with z
-      g = true, -- bindings for prefixed with g
+      windows = true,      -- default bindings on <c-w>
+      nav = true,          -- misc bindings to work with windows
+      z = true,            -- bindings for folds, spelling and others prefixed with z
+      g = true,            -- bindings for prefixed with g
     },
-  },
-  -- add operators that will trigger motion and text object completion
-  -- to enable all native operators, set the preset / operators plugin above
-  -- operators = { gc = "Comments" },
-  key_labels = {
-    -- override the label used to display some keys. It doesn't effect WK in any other way.
-    -- For example:
-    -- ["<space>"] = "SPC",
-    -- ["<cr>"] = "RET",
-    -- ["<tab>"] = "TAB",
   },
   icons = {
     breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-    separator = "➜", -- symbol used between a key and it's label
+    separator = "➜", -- symbol used between a key and its label
     group = "+", -- symbol prepended to a group
   },
-  popup_mappings = {
+  keys = {
     scroll_down = "<c-d>", -- binding to scroll down inside the popup
-    scroll_up = "<c-u>", -- binding to scroll up inside the popup
+    scroll_up = "<c-u>",   -- binding to scroll up inside the popup
   },
-  window = {
-    border = "rounded", -- none, single, double, shadow
-    position = "bottom", -- bottom, top
-    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-    winblend = 0,
+  win = {
+    -- don't allow the popup to overlap with the cursor
+    no_overlap = true,
+    -- width = 1,
+    -- height = { min = 4, max = 25 },
+    -- col = 0,
+    -- row = math.huge,
+    -- border = "none",
+    padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
+    title = true,
+    title_pos = "center",
+    zindex = 1000,
+    bo = {},
+    wo = {
+      -- winblend = 90, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+    },
   },
   layout = {
-    height = { min = 4, max = 25 }, -- min and max height of the columns
-    width = { min = 20, max = 50 }, -- min and max width of the columns
-    spacing = 3, -- spacing between columns
-    align = "left", -- align columns left, center or right
+    width = { min = 20 }, -- min and max width of the columns
+    spacing = 3,          -- spacing between columns
   },
-  ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-  show_help = true, -- show help message on the command line when the popup is visible
-  triggers = "auto", -- automatically setup triggers
-  -- triggers = {"<leader>"} -- or specify a list manually
-  triggers_blacklist = {
-    -- list of mode / prefixes that should never be hooked by WhichKey
-    -- this is mostly relevant for key maps that start with a native binding
-    -- most people should not need to change this
-    i = { "j", "k" },
-    v = { "j", "k" },
-  },
-}
+  show_help = true,       -- show help message on the command line when the popup is visible
+    triggers = {{ "<auto>", mode = "nxsot" }},      -- automatically setup triggers
+  show_keys = true,
+})
 
-local opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
-}
+local markdown_preview_active = false
 
-local mappings = {
-  ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["q"] = { "<cmd>q!<CR>", "Quit" },
-  ["x"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-  ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  ["c"] = { "<cmd>lua require('conform').format({timeout_ms=2000})<CR>", "Format File" },
+local function toggle_markdown_preview()
+  if markdown_preview_active then
+    vim.cmd("MarkdownPreviewStop")
+  else
+    vim.cmd("MarkdownPreview")
+  end
+  markdown_preview_active = not markdown_preview_active
+end
 
-  p = {
-    name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
-  },
-
-  ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Find files",
-  },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-}
-
-which_key.setup(setup)
-which_key.register(mappings, opts)
+which_key.add({
+  { "<leader>F", "<cmd>Telescope live_grep theme=ivy<cr>", desc = "Find Text", nowait = true, remap = false },
+  { "<leader>c", "<cmd>lua require('conform').format({timeout_ms=2000})<CR>", desc = "Format File", nowait = true, remap = false },
+  { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer", nowait = true, remap = false },
+  { "<leader>f", "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>", desc = "Find files", nowait = true, remap = false },
+  { "<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight", nowait = true, remap = false },
+  { "<leader>m", toggle_markdown_preview, desc = "Markdown Preview", nowait = true, remap = false },
+  { "<leader>p", group = "Packer", nowait = true, remap = false },
+  { "<leader>pS", "<cmd>PackerStatus<cr>", desc = "Status", nowait = true, remap = false },
+  { "<leader>pc", "<cmd>PackerCompile<cr>", desc = "Compile", nowait = true, remap = false },
+  { "<leader>pi", "<cmd>PackerInstall<cr>", desc = "Install", nowait = true, remap = false },
+  { "<leader>ps", "<cmd>PackerSync<cr>", desc = "Sync", nowait = true, remap = false },
+  { "<leader>pu", "<cmd>PackerUpdate<cr>", desc = "Update", nowait = true, remap = false },
+  { "<leader>q", "<cmd>q!<CR>", desc = "Quit", nowait = true, remap = false },
+  { "<leader>w", "<cmd>w!<CR>", desc = "Save", nowait = true, remap = false },
+  { "<leader>x", "<cmd>Bdelete!<CR>", desc = "Close Buffer", nowait = true, remap = false },
+})

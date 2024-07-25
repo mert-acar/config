@@ -44,6 +44,7 @@ return packer.startup(
     use { "wbthomason/packer.nvim"}
     use { "nvim-lua/plenary.nvim"}
     use { "christoomey/vim-tmux-navigator"}
+    use { 'echasnovski/mini.nvim'}
 
     use { "folke/which-key.nvim"}
 

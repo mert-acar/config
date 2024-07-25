@@ -1,6 +1,6 @@
 require "user.keymaps"
-require "user.plugins" 
-require "user.nvim-tmux-nav" 
+require "user.plugins"
+require "user.nvim-tmux-nav"
 require "user.whichkey"
 require "user.bufferline"
 require "user.comment"
