@@ -95,11 +95,12 @@ return {
 					luasnip.lsp_expand(args.body) -- For `luasnip` users.
 				end,
 			},
+
 			mapping = {
-				["<S-space>"] = cmp.mapping.complete(),
-				["<TAB>"] = cmp.mapping.select_next_item(cmp_select),
-				["<S-TAB>"] = cmp.mapping.select_prev_item(cmp_select),
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
+				["<C-Space>"] = cmp.mapping.complete(),
+				["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+				["<C-m>"] = cmp.mapping.select_prev_item(cmp_select),
+				["<TAB>"] = cmp.mapping.confirm({ select = true }),
 			},
 			sources = {
 				{ name = "nvim_lsp" },
