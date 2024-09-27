@@ -20,7 +20,7 @@ return {
 			vim.lsp.protocol.make_client_capabilities(),
 			cmp_lsp.default_capabilities()
 		)
-		require("fidget").setup({})
+		require("fidget").setup()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = { "lua_ls", "pyright", "vimls" },
@@ -45,7 +45,7 @@ return {
                   typeCheckingMode = "off",
 									-- Specify which errors/warnings to enable or disable
 									diagnosticSeverityOverrides = {
-										reportArgumentType = "information",
+										reportArgumentType = "none",
 										reportPossiblyUnboundVariable = "none",
 									},
 								},
@@ -133,7 +133,9 @@ return {
 		})
 
 		vim.diagnostic.config({
-			virtual_text = false,
+			virtual_text = {
+        severity = {vim.diagnostic.severity.WARN},
+      },
 			float = {
 				focusable = false,
 				style = "minimal",
