@@ -39,10 +39,13 @@ return {
 						settings = {
 							python = {
 								analysis = {
+									extraPaths = {
+										os.getenv("PYTHONPATH"),
+									},
 									autoSearchPaths = true,
 									diagnosticMode = "openFilesOnly",
 									useLibraryCodeForTypes = false,
-                  typeCheckingMode = "off",
+									typeCheckingMode = "off",
 									-- Specify which errors/warnings to enable or disable
 									diagnosticSeverityOverrides = {
 										reportArgumentType = "none",
@@ -134,8 +137,8 @@ return {
 
 		vim.diagnostic.config({
 			virtual_text = {
-        severity = {vim.diagnostic.severity.WARN},
-      },
+				severity = { vim.diagnostic.severity.WARN },
+			},
 			float = {
 				focusable = false,
 				style = "minimal",
