@@ -37,6 +37,9 @@ alias "r"="ranger"
 alias "ll"="ls -la"
 alias "rr"="rm -rf __pycache__"
 
+alias "mython3"="PYTHONPATH=../src/ python3"
+alias "mython"="PYTHONPATH=../src/ python"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$($HOME/miniconda3/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
