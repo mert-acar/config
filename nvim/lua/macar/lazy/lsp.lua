@@ -39,12 +39,9 @@ return {
 						settings = {
 							python = {
 								analysis = {
-									extraPaths = {
-										os.getenv("PYTHONPATH"),
-									},
 									autoSearchPaths = true,
 									diagnosticMode = "openFilesOnly",
-									useLibraryCodeForTypes = false,
+									useLibraryCodeForTypes = true,
 									typeCheckingMode = "off",
 									-- Specify which errors/warnings to enable or disable
 									diagnosticSeverityOverrides = {

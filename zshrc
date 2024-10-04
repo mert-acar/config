@@ -19,11 +19,6 @@ else
   export EDITOR='nvim'
 fi
 
-eval $(thefuck --alias)
-eval $(thefuck --alias fk)
-eval $(zoxide init zsh)
-eval $(fzf --zsh)
-
 alias "vi"="nvim"
 alias "tmux"="tmux -u"
 alias "lab"='jupyter lab'
@@ -38,12 +33,10 @@ alias "gp"="git push"
 alias "ga"="git add ."
 alias "gg"="ga && gc && gp"
 
-alias "ls"="eza --color=always --long --git --icons=always --no-user --no-permissions"
+alias "ls"="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 alias "ll"="ls -la"
 alias "r"="ranger"
 alias "rr"="rm -rf __pycache__"
-
-alias "cd"="z"
 
 alias "mython3"="PYTHONPATH=../src/ python3"
 alias "mython"="PYTHONPATH=../src/ python"
@@ -68,6 +61,7 @@ if [[ -n "$CONDA_PREFIX" ]]; then
   conda activate "$(basename $CONDA_PREFIX)"
 fi
 
+eval "$(fzf --zsh)"
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --no-ignore --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --no-ignore --exclude .git"
@@ -92,6 +86,8 @@ fzf_vim_open() {
 }
 
 zle -N fzf_vim_open
+
+# Bind Control-S to fuzzy find files and open with vim
 bindkey '^S' fzf_vim_open
 
 export BAT_THEME="Monokai Extended Origin"
@@ -101,6 +97,7 @@ show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head
 
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
 # Advanced customization of fzf options via _fzf_comprun function
 # - The first argument to the function is the name of the command.
 # - You should make sure to pass the rest of the arguments to fzf.
@@ -116,3 +113,7 @@ _fzf_comprun() {
   esac
 }
 
+eval $(thefuck --alias)
+eval $(thefuck --alias fk)
+
+eval "$(zoxide init zsh)"
