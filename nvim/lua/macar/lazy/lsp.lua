@@ -41,12 +41,11 @@ return {
 								analysis = {
 									autoSearchPaths = true,
 									diagnosticMode = "openFilesOnly",
-									useLibraryCodeForTypes = true,
+									useLibraryCodeForTypes = false,
 									typeCheckingMode = "off",
-									-- Specify which errors/warnings to enable or disable
 									diagnosticSeverityOverrides = {
-										reportArgumentType = "none",
-										reportPossiblyUnboundVariable = "none",
+										reportArgumentType = false,
+										reportPossiblyUnboundVariable = false,
 									},
 								},
 							},

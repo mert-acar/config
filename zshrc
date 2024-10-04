@@ -19,6 +19,7 @@ else
   export EDITOR='nvim'
 fi
 
+alias "cd"="z"
 alias "vi"="nvim"
 alias "tmux"="tmux -u"
 alias "lab"='jupyter lab'
