@@ -100,9 +100,9 @@ return {
 			},
 
 			mapping = {
-				["<C-Space>"] = cmp.mapping.complete(),
-				["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-				["<C-m>"] = cmp.mapping.select_prev_item(cmp_select),
+        ["<S-TAB>"] = cmp.mapping.complete(),
+				["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
+				["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
 				["<TAB>"] = cmp.mapping.confirm({ select = true }),
 			},
 			sources = {
