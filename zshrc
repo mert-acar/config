@@ -34,7 +34,7 @@ alias "gp"="git push"
 alias "ga"="git add ."
 alias "gg"="ga && gc && gp"
 
-alias "ls"="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias "ls"="eza --color=always --long --git --icons=always --no-user --no-permissions"
 alias "ll"="ls -la"
 alias "r"="ranger"
 alias "rr"="rm -rf __pycache__"
