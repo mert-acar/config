@@ -62,20 +62,15 @@ if [[ -n "$CONDA_PREFIX" ]]; then
 fi
 
 # Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
 eval "$(zoxide init zsh)"
 
+source <(fzf --zsh)
 fzf_vim_open() {
   local file
-  # Run fzf and select a file, store the result in the 'file' variable
   file=$(find . -type f -not -path '*/\.git/*' | fzf --preview 'bat --style=numbers --color=always {}')
-  
-  # If a file was selected (fzf returns a non-empty result), open it with vim
   if [[ -n "$file" ]]; then
     vi "$file"
   fi
 }
-
 zle -N fzf_vim_open
-# Bind the function to Ctrl+S
-bindkey '^S' fzf_vim_open  # For zsh
+bindkey '^S' fzf_vim_open
