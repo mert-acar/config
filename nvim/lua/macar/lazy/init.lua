@@ -1,1 +1,4 @@
-return {{ "nvim-lua/plenary.nvim", name = "plenary" }}
+return {
+	-- minimal config plugins go here
+	{ "nvim-lua/plenary.nvim"}, 
+}
