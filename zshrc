@@ -68,7 +68,7 @@ eval "$(zoxide init zsh)"
 source <(fzf --zsh)
 fzf_vim_open() {
   local file
-  file=$(find . -type f -not -path '*/\.git/*' | fzf --preview 'bat --style=numbers --color=always {}')
+  file=$(fd --type f --hidden --exclude .git | fzf --preview 'bat --style=numbers --color=always {}')
   if [[ -n "$file" ]]; then
     vi "$file"
   fi

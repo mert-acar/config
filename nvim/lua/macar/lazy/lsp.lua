@@ -31,7 +31,14 @@ return {
         function(server_name)
           require("lspconfig")[server_name].setup({ capabilities = capabilities })
         end,
-
+        ["harper_ls"] = function()
+          -- attach glow to markdown server
+          require('glow').setup()
+          vim.keymap.set("n", "<leader>m", vim.cmd.Glow, {desc = "Markdown preview"})
+          require("lspconfig").harper_ls.setup({
+            capabilities = capabilities,
+          })
+        end,
         ["lua_ls"] = function()
           require("lspconfig").lua_ls.setup({
             capabilities = capabilities,
