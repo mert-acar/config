@@ -36,7 +36,15 @@ return {
           require('glow').setup()
           vim.keymap.set("n", "<leader>m", vim.cmd.Glow, {desc = "Markdown preview"})
           require("lspconfig").harper_ls.setup({
+            filetypes = { "markdown" },
             capabilities = capabilities,
+            settings = {
+              ["harper-ls"] = {
+                linters = {
+                  sentence_capitalization = false,
+                }
+              }
+            }
           })
         end,
         ["lua_ls"] = function()
