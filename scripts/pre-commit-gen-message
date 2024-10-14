@@ -1,9 +1,29 @@
-#1/bin/zsh
+#!/bin/zsh
 
 # Check if there are any staged changes
 if git diff --cached --quiet; then
     echo "No changes to commit. Exiting."
     exit 0
 fi
-commit_message=$(curl -sL https://whatthecommit.com/index.txt)
-git commit -m "$commit_message"
+
+while true; do
+    # Fetch a random commit message
+    commit_message=$(curl -sL https://whatthecommit.com/index.txt)
+    
+    # Display the commit message
+    echo "Suggested commit message: $commit_message"
+
+    # Prompt the user for confirmation
+    echo "Do you want to use this commit message? (y/n): \c"
+    read confirm
+
+    # Check if the user accepted the commit message
+    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+        # If accepted, perform the commit
+        git commit -m "$commit_message"
+        break
+    else
+        # If not accepted, fetch a new message and ask again
+        echo "Fetching a new commit message..."
+    fi
+done
