@@ -1,0 +1,7 @@
+{
+  "venvPath": "/opt/homebrew/Caskroom/miniconda/base/envs/",
+  "autoSearchPaths": true,
+  "diagnosticMode": "workspace",
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": true,
+}

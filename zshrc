@@ -21,7 +21,6 @@ fi
 
 alias "cd"="z"
 alias "vi"="nvim"
-alias "tmux"="tmux -u"
 alias "lab"='jupyter lab'
 alias "b"="black --line-length=100 *.py"
 
