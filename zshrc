@@ -2,6 +2,7 @@
 source $HOME/.config/paths.zsh
 
 export ZSH="$HOME/.oh-my-zsh"
+export TERM="alacritty"
 ZSH_THEME="robbyrussell"
 plugins=(
   git 

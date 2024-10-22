@@ -3,5 +3,5 @@
   "autoSearchPaths": true,
   "diagnosticMode": "workspace",
   "typeCheckingMode": "basic",
-  "useLibraryCodeForTypes": true,
+  "useLibraryCodeForTypes": false,
 }
