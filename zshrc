@@ -23,6 +23,7 @@ alias "cd"="z"
 alias "vi"="nvim"
 alias "lab"='jupyter lab'
 alias "b"="black --line-length=100 *.py"
+alias "yy"="yapf --in-place --recursive ."
 
 alias "ac"="conda activate"
 alias "dc"="conda deactivate"
@@ -37,9 +38,6 @@ alias "ls"="eza --color=always --long --git --icons=always --no-user --no-permis
 alias "ll"="ls -la"
 alias "r"="ranger"
 alias "rr"="rm -rf __pycache__"
-
-alias "mython3"="PYTHONPATH=../src/ python3"
-alias "mython"="PYTHONPATH=../src/ python"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

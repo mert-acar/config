@@ -55,45 +55,6 @@ return {
 						},
 					})
 				end,
-				-- ["ruff"] = function()
-				-- 	require("lspconfig").ruff.setup({
-				--         settings = {
-				--         },
-				-- 	})
-				-- end,
-				-- ["pyright"] = function()
-				-- 	require("lspconfig").pyright.setup({
-				-- 		settings = {
-				-- 			python = {
-				-- 				analysis = {
-				-- 					venvPath = os.getenv("CONDA_ENVS_PATH"),
-				-- 					autoSearchPaths = true,
-				-- 					diagnosticMode = "workspace",
-				-- 					useLibraryCodeForTypes = false,
-				-- 					typeCheckingMode = "off",
-				-- 					diagnosticSeverityOverrides = {
-				-- 						reportArgumentType = false,
-				-- 						reportPossiblyUnboundVariable = false,
-				-- 						reportPrivateImportUsage = false,
-				-- 					},
-				-- 				},
-				-- 			},
-				-- 		},
-				-- 	})
-				-- end,
-			},
-		})
-
-		-- Formatting
-		require("mason-null-ls").setup({
-			ensure_installed = { "yapf", "stylua" },
-			automatic_installation = true,
-		})
-		local null_ls = require("null-ls")
-		null_ls.setup({
-			sources = {
-				null_ls.builtins.formatting.yapf,
-				null_ls.builtins.formatting.stylua,
 			},
 		})
 
@@ -127,6 +88,55 @@ return {
 			TypeParameter = " ",
 			Misc = " ",
 		}
+
+		require("mason-null-ls").setup({
+			ensure_installed = { "yapf", "stylua", "black" },
+			automatic_installation = true,
+		})
+
+		local null_ls = require("null-ls")
+		local formatting = null_ls.builtins.formatting
+		local function set_python_formatter()
+			-- Check if you are in the work project directory
+			if vim.fn.getcwd():match("laconic") then
+				-- Use black with line-length 100 for work project
+				null_ls.setup({
+					sources = {
+						formatting.black.with({
+							extra_args = { "--line-length", "100", "--fast" },
+						}),
+					},
+				})
+			else
+				-- Default to yapf for other projects
+				null_ls.setup({
+					sources = {
+						formatting.yapf,
+					},
+				})
+			end
+		end
+
+		-- Function to format using the appropriate formatter
+		function Format_with_dynamic_formatter()
+			set_python_formatter()
+			-- Call the LSP formatting command
+			vim.lsp.buf.format({
+				async = true,
+				filter = function(client)
+					-- Only use null-ls for formatting
+					return client.name == "null-ls"
+				end,
+			})
+		end
+
+		-- Bind <leader>c to this dynamic formatting function
+		vim.api.nvim_set_keymap(
+			"n",
+			"<leader>c",
+			":lua Format_with_dynamic_formatter()<CR>",
+			{ noremap = true, silent = true }
+		)
 
 		local luasnip = require("luasnip")
 		local cmp_select = { behavior = cmp.SelectBehavior.Insert }
