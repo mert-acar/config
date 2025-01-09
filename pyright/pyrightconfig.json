@@ -1,4 +1,5 @@
 {
   "venvPath": "/opt/homebrew/Caskroom/miniconda/base/envs/",
   "autoSearchPaths": true,
+  "reportPossiblyUnboundVariable": false
 }
