@@ -1,29 +1,37 @@
 #!/bin/zsh
 
+git add $PWD
+
 # Check if there are any staged changes
 if git diff --cached --quiet; then
     echo "No changes to commit. Exiting."
     exit 0
 fi
 
-while true; do
-    # Fetch a random commit message
-    commit_message=$(curl -sL https://whatthecommit.com/index.txt)
-    
-    # Display the commit message
-    echo "Suggested commit message: $commit_message"
+if [ $# -eq 1 ]; then
+    commit_message=$1
+else
+  while true; do
+      # Fetch a random commit message
+      commit_message=$(curl -sL https://whatthecommit.com/index.txt)
+      
+      # Display the commit message
+      echo "Suggested commit message: $commit_message"
 
-    # Prompt the user for confirmation
-    echo "Do you want to use this commit message? (y/n): \c"
-    read confirm
+      # Prompt the user for confirmation
+      echo "Do you want to use this commit message? (y/n): \c"
+      read confirm
 
-    # Check if the user accepted the commit message
-    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
-        # If accepted, perform the commit
-        git commit -m "$commit_message"
-        break
-    else
-        # If not accepted, fetch a new message and ask again
-        echo "Fetching a new commit message..."
-    fi
-done
+      # Check if the user accepted the commit message
+      if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+          # If accepted, perform the commit
+          break
+      else
+          # If not accepted, fetch a new message and ask again
+          echo "Fetching a new commit message..."
+      fi
+  done
+fi
+
+git commit -m "$commit_message"
+git push
