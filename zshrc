@@ -30,9 +30,6 @@ alias "dc"="conda deactivate"
 
 alias "gs"="git status"
 alias "gc"="pre-commit-gen-message"
-alias "gp"="git push"
-alias "ga"="git add ."
-alias "gg"="ga && gc && gp"
 
 alias "ls"="eza --color=always --long --git --icons=always --no-user --no-permissions"
 alias "ll"="ls -la"
